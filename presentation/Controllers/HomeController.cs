@@ -1,32 +1,35 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using presentation.Models;
+using presentation.Models.Dto;
+using presentation.Services.IServices;
 using System.Diagnostics;
+using Utility;
 
 namespace presentation.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IResortService _ResortService;
+        private readonly IMapper _mapper;
+        public HomeController(IResortService ResortService, IMapper mapper)
         {
-            _logger = logger;
+            _ResortService = ResortService;
+            _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<ResortDTO> list = new();
+
+            var response = await _ResortService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
+            if (response != null && response.IsSuccess)
+            {
+                list = JsonConvert.DeserializeObject<List<ResortDTO>>(Convert.ToString(response.Result));
+            }
+            return View(list);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }
