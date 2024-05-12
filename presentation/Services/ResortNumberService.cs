@@ -17,55 +17,55 @@ namespace presentation.Services
 
         }
 
-        public Task<T> CreateAsync<T>(ResortNumberCreateDTO dto, string token)
+        public Task<T> CreateAsync<T>(ResortNumberCreateDTO dto)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.POST,
                 Data = dto,
                 Url = ResortUrl + $"/api/{SD.CurrentAPIVersion}/resortNumberAPI",
-                Token = token
+                
             });
         }
 
-        public Task<T> DeleteAsync<T>(int id, string token)
+        public Task<T> DeleteAsync<T>(int id)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.DELETE,
                 Url = ResortUrl + $"/api/{SD.CurrentAPIVersion}/resortNumberAPI/" + id,
-                Token = token
+                
             });
         }
 
-        public Task<T> GetAllAsync<T>(string token)
+        public Task<T> GetAllAsync<T>()
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.GET,
                 Url = ResortUrl + $"/api/{SD.CurrentAPIVersion}/resortNumberAPI",
-                Token = token
+                
             });
         }
 
-        public Task<T> GetAsync<T>(int id, string token)
+        public Task<T> GetAsync<T>(int id)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.GET,
                 Url = ResortUrl + $"/api/{SD.CurrentAPIVersion}/resortNumberAPI/" + id,
-                Token = token
+                
             });
         }
 
-        public Task<T> UpdateAsync<T>(ResortNumberUpdateDTO dto, string token)
+        public Task<T> UpdateAsync<T>(ResortNumberUpdateDTO dto)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.PUT,
                 Data = dto,
                 Url = ResortUrl + $"/api/{SD.CurrentAPIVersion}/resortNumberAPI/" + dto.ResortNo,
-                Token = token
+                
             });
         }
     }

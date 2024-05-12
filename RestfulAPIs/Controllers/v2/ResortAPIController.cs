@@ -112,7 +112,7 @@ namespace RestfulAPIs.Controllers.v2
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<APIResponse>> CreateResort([FromBody] ResortCreateDTO createDTO)
+        public async Task<ActionResult<APIResponse>> CreateResort([FromForm] ResortCreateDTO createDTO)
         {
             try
             {
@@ -130,23 +130,41 @@ namespace RestfulAPIs.Controllers.v2
                 {
                     return BadRequest(createDTO);
                 }
-                //if (villaDTO.Id > 0)
-                //{
-                //    return StatusCode(StatusCodes.Status500InternalServerError);
-                //}
+                
                 Resort resort = _mapper.Map<Resort>(createDTO);
 
-                //Villa model = new()
-                //{
-                //    Amenity = createDTO.Amenity,
-                //    Details = createDTO.Details,
-                //    ImageUrl = createDTO.ImageUrl,
-                //    Name = createDTO.Name,
-                //    Occupancy = createDTO.Occupancy,
-                //    Rate = createDTO.Rate,
-                //    Sqft = createDTO.Sqft
-                //};
+                
                 await _dbResort.CreateAsync(resort);
+                if(createDTO.Image != null)
+                {
+                    string fileName = resort.Id + Path.GetExtension(createDTO.Image.FileName);
+                    string filePath = @"wwwroot\ProductImage\" + fileName;
+
+                    var directoryLocation = Path.Combine(Directory.GetCurrentDirectory(), filePath);
+
+                    FileInfo file = new FileInfo(directoryLocation);
+
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                    }
+
+                    using (var fileStream = new FileStream(directoryLocation, FileMode.Create))
+                    {
+                        createDTO.Image.CopyTo(fileStream);
+                    }
+
+                    var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
+                    resort.ImageUrl = baseUrl + "/ProductImage/" + fileName;
+                    resort.ImageLocalPath = filePath;
+
+
+                }
+                else
+                {
+                    resort.ImageUrl = "https://placehold.co/600x400";
+                }
+                await _dbResort.UpdateAsync(resort);
                 _response.Result = _mapper.Map<ResortDTO>(resort);
                 _response.StatusCode = HttpStatusCode.Created;
                 return CreatedAtRoute("GetResort", new { id = resort.Id }, _response);
@@ -180,6 +198,17 @@ namespace RestfulAPIs.Controllers.v2
                 {
                     return NotFound();
                 }
+                if (!string.IsNullOrEmpty(resort.ImageLocalPath))
+                {
+                    var oldFilePathDirectory = Path.Combine(Directory.GetCurrentDirectory(), resort.ImageLocalPath);
+                    FileInfo file = new FileInfo(oldFilePathDirectory);
+
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                    }
+                }
+
                 await _dbResort.RemoveAsync(resort);
                 _response.StatusCode = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
@@ -197,7 +226,7 @@ namespace RestfulAPIs.Controllers.v2
         [HttpPut("{id:int}", Name = "UpdateResort")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<APIResponse>> UpdateResort(int id, [FromBody] ResortUpdateDTO updateDTO)
+        public async Task<ActionResult<APIResponse>> UpdateResort(int id, [FromForm] ResortUpdateDTO updateDTO)
         {
             try
             {
@@ -207,6 +236,39 @@ namespace RestfulAPIs.Controllers.v2
                 }
 
                 Resort model = _mapper.Map<Resort>(updateDTO);
+                if (updateDTO.Image != null)
+                {
+                    if (!string.IsNullOrEmpty(model.ImageLocalPath))
+                    {
+                        var oldFilePathDirectory = Path.Combine(Directory.GetCurrentDirectory(), model.ImageLocalPath);
+                        FileInfo file = new FileInfo(oldFilePathDirectory);
+
+                        if (file.Exists)
+                        {
+                            file.Delete();
+                        }
+                    }
+
+                    string fileName = updateDTO.Id + Path.GetExtension(updateDTO.Image.FileName);
+                    string filePath = @"wwwroot\ProductImage\" + fileName;
+
+                    var directoryLocation = Path.Combine(Directory.GetCurrentDirectory(), filePath);
+
+                    using (var fileStream = new FileStream(directoryLocation, FileMode.Create))
+                    {
+                        updateDTO.Image.CopyTo(fileStream);
+                    }
+
+                    var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
+                    model.ImageUrl = baseUrl + "/ProductImage/" + fileName;
+                    model.ImageLocalPath = filePath;
+
+                }
+                else
+                {
+                    model.ImageUrl = "https://placehold.co/600x400";
+                }
+
 
                 await _dbResort.UpdateAsync(model);
                 _response.StatusCode = HttpStatusCode.NoContent;

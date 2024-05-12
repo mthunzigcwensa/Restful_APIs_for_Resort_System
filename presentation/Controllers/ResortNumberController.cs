@@ -28,7 +28,7 @@ namespace presentation.Controllers
         {
             List<ResortNumberDTO> list = new();
 
-            var response = await _ResortNumberService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
+            var response = await _ResortNumberService.GetAllAsync<APIResponse>();
             if (response != null && response.IsSuccess)
             {
                 list = JsonConvert.DeserializeObject<List<ResortNumberDTO>>(Convert.ToString(response.Result));
@@ -39,7 +39,7 @@ namespace presentation.Controllers
         public async Task<IActionResult> CreateResortNumber()
         {
             ResortNumberCreateVM ResortNumberVM = new();
-            var response = await _ResortService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
+            var response = await _ResortService.GetAllAsync<APIResponse>();
             if (response != null && response.IsSuccess)
             {
                 ResortNumberVM.ResortsList = JsonConvert.DeserializeObject<List<ResortDTO>>
@@ -59,7 +59,7 @@ namespace presentation.Controllers
             if (ModelState.IsValid)
             {
 
-                var response = await _ResortNumberService.CreateAsync<APIResponse>(model.ResortNumber, HttpContext.Session.GetString(SD.SessionToken));
+                var response = await _ResortNumberService.CreateAsync<APIResponse>(model.ResortNumber) ;
                 if (response != null && response.IsSuccess)
                 {
                     return RedirectToAction(nameof(IndexResortNumber));
@@ -73,7 +73,7 @@ namespace presentation.Controllers
                 }
             }
 
-            var resp = await _ResortService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
+            var resp = await _ResortService.GetAllAsync<APIResponse>();
             if (resp != null && resp.IsSuccess)
             {
                 model.ResortsList = JsonConvert.DeserializeObject<List<ResortDTO>>
@@ -89,14 +89,14 @@ namespace presentation.Controllers
         public async Task<IActionResult> UpdateResortNumber(int ResortNo)
         {
             ResortNumberUpdateVM ResortNumberVM = new();
-            var response = await _ResortNumberService.GetAsync<APIResponse>(ResortNo, HttpContext.Session.GetString(SD.SessionToken));
+            var response = await _ResortNumberService.GetAsync<APIResponse>(ResortNo) ;
             if (response != null && response.IsSuccess)
             {
                 ResortNumberDTO model = JsonConvert.DeserializeObject<ResortNumberDTO>(Convert.ToString(response.Result));
                 ResortNumberVM.ResortNumber = _mapper.Map<ResortNumberUpdateDTO>(model);
             }
 
-            response = await _ResortService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
+            response = await _ResortService.GetAllAsync<APIResponse>();
             if (response != null && response.IsSuccess)
             {
                 ResortNumberVM.ResortsList = JsonConvert.DeserializeObject<List<ResortDTO>>
@@ -119,7 +119,7 @@ namespace presentation.Controllers
             if (ModelState.IsValid)
             {
 
-                var response = await _ResortNumberService.UpdateAsync<APIResponse>(model.ResortNumber, HttpContext.Session.GetString(SD.SessionToken));
+                var response = await _ResortNumberService.UpdateAsync<APIResponse>(model.ResortNumber) ;
                 if (response != null && response.IsSuccess)
                 {
                     return RedirectToAction(nameof(IndexResortNumber));
@@ -133,7 +133,7 @@ namespace presentation.Controllers
                 }
             }
 
-            var resp = await _ResortService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
+            var resp = await _ResortService.GetAllAsync<APIResponse>();
             if (resp != null && resp.IsSuccess)
             {
                 model.ResortsList = JsonConvert.DeserializeObject<List<ResortDTO>>
@@ -149,14 +149,14 @@ namespace presentation.Controllers
         public async Task<IActionResult> DeleteResortNumber(int ResortNo)
         {
             ResortNumberDeleteVM ResortNumberVM = new();
-            var response = await _ResortNumberService.GetAsync<APIResponse>(ResortNo, HttpContext.Session.GetString(SD.SessionToken));
+            var response = await _ResortNumberService.GetAsync<APIResponse>(ResortNo) ;
             if (response != null && response.IsSuccess)
             {
                 ResortNumberDTO model = JsonConvert.DeserializeObject<ResortNumberDTO>(Convert.ToString(response.Result));
                 ResortNumberVM.ResortNumber = model;
             }
 
-            response = await _ResortService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
+            response = await _ResortService.GetAllAsync<APIResponse>();
             if (response != null && response.IsSuccess)
             {
                 ResortNumberVM.ResortsList = JsonConvert.DeserializeObject<List<ResortDTO>>
@@ -177,7 +177,7 @@ namespace presentation.Controllers
         public async Task<IActionResult> DeleteVillaNumber(ResortNumberDeleteVM model)
         {
 
-            var response = await _ResortNumberService.DeleteAsync<APIResponse>(model.ResortNumber.ResortNo, HttpContext.Session.GetString(SD.SessionToken));
+            var response = await _ResortNumberService.DeleteAsync<APIResponse>(model.ResortNumber.ResortNo) ;
             if (response != null && response.IsSuccess)
             {
                 return RedirectToAction(nameof(IndexResortNumber));

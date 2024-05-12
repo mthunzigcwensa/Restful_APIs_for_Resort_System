@@ -24,7 +24,7 @@ namespace presentation.Controllers
         {
             List<ResortDTO> list = new();
 
-            var response = await _ResortService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
+            var response = await _ResortService.GetAllAsync<APIResponse>();
             if (response != null && response.IsSuccess)
             {
                 list = JsonConvert.DeserializeObject<List<ResortDTO>>(Convert.ToString(response.Result));
@@ -44,7 +44,7 @@ namespace presentation.Controllers
             if (ModelState.IsValid)
             {
 
-                var response = await _ResortService.CreateAsync<APIResponse>(model, HttpContext.Session.GetString(SD.SessionToken));
+                var response = await _ResortService.CreateAsync<APIResponse>(model) ;
                 if (response != null && response.IsSuccess)
                 {
                     TempData["success"] = "Resort created successfully";
@@ -57,7 +57,7 @@ namespace presentation.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateResort(int ResortId)
         {
-            var response = await _ResortService.GetAsync<APIResponse>(ResortId, HttpContext.Session.GetString(SD.SessionToken));
+            var response = await _ResortService.GetAsync<APIResponse>(ResortId) ;
             if (response != null && response.IsSuccess)
             {
 
@@ -74,7 +74,7 @@ namespace presentation.Controllers
             if (ModelState.IsValid)
             {
                 TempData["success"] = "Resort updated successfully";
-                var response = await _ResortService.UpdateAsync<APIResponse>(model, HttpContext.Session.GetString(SD.SessionToken));
+                var response = await _ResortService.UpdateAsync<APIResponse>(model) ;
                 if (response != null && response.IsSuccess)
                 {
                     return RedirectToAction(nameof(IndexResort));
@@ -86,7 +86,7 @@ namespace presentation.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteResort(int ResortId)
         {
-            var response = await _ResortService.GetAsync<APIResponse>(ResortId, HttpContext.Session.GetString(SD.SessionToken));
+            var response = await _ResortService.GetAsync<APIResponse>(ResortId) ;
             if (response != null && response.IsSuccess)
             {
                 ResortDTO model = JsonConvert.DeserializeObject<ResortDTO>(Convert.ToString(response.Result));
@@ -100,7 +100,7 @@ namespace presentation.Controllers
         public async Task<IActionResult> DeleteResort(ResortDTO model)
         {
 
-            var response = await _ResortService.DeleteAsync<APIResponse>(model.Id, HttpContext.Session.GetString(SD.SessionToken));
+            var response = await _ResortService.DeleteAsync<APIResponse>(model.Id);
             if (response != null && response.IsSuccess)
             {
                 TempData["success"] = "Resort deleted successfully";

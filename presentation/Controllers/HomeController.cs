@@ -23,7 +23,7 @@ namespace presentation.Controllers
         {
             List<ResortDTO> list = new();
 
-            var response = await _ResortService.GetAllAsync<APIResponse>(HttpContext.Session.GetString(SD.SessionToken));
+            var response = await _ResortService.GetAllAsync<APIResponse>();
             if (response != null && response.IsSuccess)
             {
                 list = JsonConvert.DeserializeObject<List<ResortDTO>>(Convert.ToString(response.Result));

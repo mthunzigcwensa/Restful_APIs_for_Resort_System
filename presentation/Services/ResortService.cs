@@ -17,55 +17,55 @@ namespace presentation.Services
 
         }
 
-        public Task<T> CreateAsync<T>(ResortCreateDTO dto, string token)
+        public Task<T> CreateAsync<T>(ResortCreateDTO dto)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.POST,
                 Data = dto,
-                Url = ResortUrl + $"/api/{SD.CurrentAPIVersion}/resortAPI",
-                Token = token
+                Url = ResortUrl + $"/api/{SD.CurrentAPIVersion}/resortAPI",              
+                ContentType = SD.ContentType.MultipartFormData
             });
         }
 
-        public Task<T> DeleteAsync<T>(int id, string token)
+        public Task<T> DeleteAsync<T>(int id)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.DELETE,
                 Url = ResortUrl + $"/api/{SD.CurrentAPIVersion}/resortAPI/" + id,
-                Token = token
+                
             });
         }
 
-        public Task<T> GetAllAsync<T>(string token)
+        public Task<T> GetAllAsync<T>()
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.GET,
                 Url = ResortUrl + $"/api/{SD.CurrentAPIVersion}/resortAPI",
-                Token = token
+                
             });
         }
 
-        public Task<T> GetAsync<T>(int id, string token)
+        public Task<T> GetAsync<T>(int id)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.GET,
                 Url = ResortUrl + $"/api/{SD.CurrentAPIVersion}/resortAPI/" + id,
-                Token = token
+                
             });
         }
 
-        public Task<T> UpdateAsync<T>(ResortUpdateDTO dto, string token)
+        public Task<T> UpdateAsync<T>(ResortUpdateDTO dto)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.PUT,
                 Data = dto,
-                Url = ResortUrl + $"/api/{SD.CurrentAPIVersion}/resortAPI/" + dto.Id,
-                Token = token
+                Url = ResortUrl + $"/api/{SD.CurrentAPIVersion}/resortAPI/" + dto.Id,               
+                ContentType = SD.ContentType.MultipartFormData
             });
         }
     }

@@ -11,7 +11,7 @@ builder.Services.AddAutoMapper(typeof(MappingConfig));
 
 builder.Services.AddHttpClient<IResortService, ResortService>();
 builder.Services.AddScoped<IResortService, ResortService>();
-
+builder.Services.AddScoped<ITokenProvider, TokenProvider>();
 builder.Services.AddHttpClient<IResortNumberService, ResortNumberService>();
 builder.Services.AddScoped<IResortNumberService, ResortNumberService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
