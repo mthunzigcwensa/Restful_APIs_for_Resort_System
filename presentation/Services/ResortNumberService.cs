@@ -5,21 +5,22 @@ using Utility;
 
 namespace presentation.Services
 {
-    public class ResortNumberService : BaseService, IResortNumberService
+    public class ResortNumberService :  IResortNumberService
     {
         private readonly IHttpClientFactory _clientFactory;
+        private readonly IBaseService _baseService;
         private string ResortUrl;
 
-        public ResortNumberService(IHttpClientFactory clientFactory, IConfiguration configuration) : base(clientFactory)
+        public ResortNumberService(IHttpClientFactory clientFactory, IConfiguration configuration, IBaseService baseService)
         {
             _clientFactory = clientFactory;
             ResortUrl = configuration.GetValue<string>("ServiceUrls:ResortAPI");
-
+            _baseService = baseService;
         }
 
-        public Task<T> CreateAsync<T>(ResortNumberCreateDTO dto)
+        public async Task<T> CreateAsync<T>(ResortNumberCreateDTO dto)
         {
-            return SendAsync<T>(new APIRequest()
+            return await _baseService.SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.POST,
                 Data = dto,
@@ -28,9 +29,9 @@ namespace presentation.Services
             });
         }
 
-        public Task<T> DeleteAsync<T>(int id)
+        public async Task<T> DeleteAsync<T>(int id)
         {
-            return SendAsync<T>(new APIRequest()
+            return await _baseService.SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.DELETE,
                 Url = ResortUrl + $"/api/{SD.CurrentAPIVersion}/resortNumberAPI/" + id,
@@ -38,9 +39,9 @@ namespace presentation.Services
             });
         }
 
-        public Task<T> GetAllAsync<T>()
+        public async Task<T> GetAllAsync<T>()
         {
-            return SendAsync<T>(new APIRequest()
+            return await _baseService.SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.GET,
                 Url = ResortUrl + $"/api/{SD.CurrentAPIVersion}/resortNumberAPI",
@@ -48,9 +49,9 @@ namespace presentation.Services
             });
         }
 
-        public Task<T> GetAsync<T>(int id)
+        public async Task<T> GetAsync<T>(int id)
         {
-            return SendAsync<T>(new APIRequest()
+            return await _baseService.SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.GET,
                 Url = ResortUrl + $"/api/{SD.CurrentAPIVersion}/resortNumberAPI/" + id,
@@ -58,9 +59,9 @@ namespace presentation.Services
             });
         }
 
-        public Task<T> UpdateAsync<T>(ResortNumberUpdateDTO dto)
+        public async Task<T> UpdateAsync<T>(ResortNumberUpdateDTO dto)
         {
-            return SendAsync<T>(new APIRequest()
+            return await _baseService.SendAsync<T>(new APIRequest()
             {
                 ApiType = SD.ApiType.PUT,
                 Data = dto,
