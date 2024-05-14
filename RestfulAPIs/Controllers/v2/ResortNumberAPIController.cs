@@ -117,7 +117,7 @@ namespace RestfulAPIs.Controllers.v2
 
                 ResortNumber resortNumber = _mapper.Map<ResortNumber>(createDTO);
 
-
+               
                 await _dbResortNumber.CreateAsync(resortNumber);
                 _response.Result = _mapper.Map<ResortNumberDTO>(resortNumber);
                 _response.StatusCode = HttpStatusCode.Created;
@@ -176,7 +176,7 @@ namespace RestfulAPIs.Controllers.v2
                 }
                 if (await _dbResort.GetAsync(u => u.Id == updateDTO.ResortID) == null)
                 {
-                    ModelState.AddModelError("ErrorMessages", "Villa ID is Invalid!");
+                    ModelState.AddModelError("ErrorMessages", "Resort ID is Invalid!");
                     return BadRequest(ModelState);
                 }
                 ResortNumber model = _mapper.Map<ResortNumber>(updateDTO);

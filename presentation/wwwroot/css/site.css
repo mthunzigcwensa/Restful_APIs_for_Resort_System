@@ -1,22 +1,113 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.booking-form label {
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #0056b3;
+}
+
+.mybtn-success {
+    background-color: #1a222b;
+    font-size: larger;
+    font-weight: bold;
+    color: white;
+}
+
+.inside {
+    background-color: #1a222b;
+    font-size: larger;
+    font-weight: bold;
+    color: white;
+}
+
+.newinside {
+    background-color: #EA002B;
+    font-size: larger;
+    font-weight: bold;
+    color: white;
+}
+
+.mybtn-success:hover {
+    color: #056F4F;
+}
+
+.myFont {
+    font-size: x-large;
+    color: #aba398;
+    font-weight: bolder;
+}
+
+.newFont {
+    font-size: x-large;
+    color: #aba398;
+    font-weight: bolder;
+}
+
+.slightFont {
+    font-size: large;
+    color: #aba398;
+    font-weight: bolder;
+}
+
+.onnewFont {
+    font-size: x-large;
+    color: #65da41;
+    font-weight: bolder;
+}
+
+.pfont {
+    font-size: medium;
+    color: white;
+}
+
+.myInput {
+    font-size: larger;
+    font-weight: bold;
+}
+
+.emphasis {
+    font-weight: bold; /* Example styling */
+    color: #65da41; /* Example styling */
+    /* Add more styles as needed */
+}
+
+.plainFont {
+    font-size: larger;
+}
+
+.odd {
+    color: white !important;
+}
+
+.table-transparent {
+    background-color: deeppink !important;
 }

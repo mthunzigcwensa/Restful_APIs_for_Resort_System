@@ -2,7 +2,7 @@
 using RestfulAPIs.Models;
 using RestfulAPIs.Models.DTOs;
 
-namespace MagicVilla_VillaAPI
+namespace RestfulAPIs
 {
     public class MappingConfig : Profile
     {
@@ -15,9 +15,9 @@ namespace MagicVilla_VillaAPI
             CreateMap<Resort, ResortUpdateDTO>().ReverseMap();
 
 
-            CreateMap<ResortNumber, ResortDTO>().ReverseMap();
-            CreateMap<ResortNumber, ResortCreateDTO>().ReverseMap();
-            CreateMap<ResortNumber, ResortUpdateDTO>().ReverseMap();
+            CreateMap<ResortNumber, ResortNumberDTO>().ReverseMap();
+            CreateMap<ResortNumber, ResortNumberCreateDTO>().ReverseMap();
+            CreateMap<ResortNumber, ResortNumberUpdateDTO>().ReverseMap();
             CreateMap<ApplicationUser, UserDTO>().ReverseMap();
         }
     }

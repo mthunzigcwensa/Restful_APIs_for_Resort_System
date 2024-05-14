@@ -16,6 +16,7 @@ namespace RestfulAPIs.Data
         public DbSet<LocalUser> LocalUsers { get; set; }
         public DbSet<Resort> Resorts { get; set; }
         public DbSet<ResortNumber> ResortNumbers { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -42,11 +42,7 @@ namespace presentation.Controllers
                 var jwt = handler.ReadJwtToken(model.AccessToken);
 
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                var nameClaim = jwt.Claims.FirstOrDefault(u => u.Type == "Name");
-                if (nameClaim != null)
-                {
-                    identity.AddClaim(new Claim(ClaimTypes.Name, nameClaim.Value));
-                }
+                identity.AddClaim(new Claim(ClaimTypes.Name, jwt.Claims.FirstOrDefault(u => u.Type == "unique_name").Value));
 
                 identity.AddClaim(new Claim(ClaimTypes.Role, jwt.Claims.FirstOrDefault(u => u.Type == "role").Value));
                 var principal = new ClaimsPrincipal(identity);
@@ -102,9 +98,12 @@ namespace presentation.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
+            var token = _tokenProvider.GetToken();
+            await _authService.LogoutAsync<APIResponse>(token);
             _tokenProvider.ClearToken();
             return RedirectToAction("Index", "Home");
         }
+
 
         public IActionResult AccessDenied()
         {

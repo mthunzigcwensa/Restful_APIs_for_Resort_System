@@ -3,7 +3,7 @@
 <form asp-action="UpdateResort" enctype="multipart/form-data">
     <br />
     <div class="container border p-3">
-        <h1 class="text-primary">Update Resort</h1>
+        <h1 class="text-secondary">Update Resort</h1>
         <hr />
 
         <input hidden asp-for="Id" />
@@ -12,7 +12,7 @@
                 <div class="row">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                    <div class="col-2">
+                    <div class="col-2 text-white">
                         <label asp-for="Name" class="control-label pt-2" style="font-size:20px;"></label>
                     </div>
                     <div class="col-10 pb-3">
@@ -20,7 +20,7 @@
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
 
-                    <div class="col-2">
+                    <div class="col-2 text-white">
                         <label asp-for="Rate" class="control-label pt-2" style="font-size:20px;"></label>
                     </div>
                     <div class="col-10 pb-3">
@@ -28,7 +28,7 @@
                         <span asp-validation-for="Rate" class="text-danger"></span>
                     </div>
 
-                    <div class="col-2">
+                    <div class="col-2 text-white">
                         <label asp-for="Details" class="control-label pt-2" style="font-size:20px;"></label>
                     </div>
                     <div class="col-10 pb-3">
@@ -36,7 +36,7 @@
                         <span asp-validation-for="Details" class="text-danger"></span>
                     </div>
 
-                    <div class="col-2">
+                    <div class="col-2 text-white">
                         <label asp-for="ImageUrl" class="control-label pt-2" style="font-size:20px;"></label>
                     </div>
                     <div class="col-10 pb-3">
@@ -46,7 +46,7 @@
                         <span asp-validation-for="Image" class="text-danger"></span>
                     </div>
 
-                    <div class="col-2">
+                    <div class="col-2 text-white">
                         <label asp-for="Occupancy" class="control-label pt-2" style="font-size:20px;"></label>
                     </div>
                     <div class="col-10 pb-3">
@@ -54,7 +54,7 @@
                         <span asp-validation-for="Occupancy" class="text-danger"></span>
                     </div>
 
-                    <div class="col-2">
+                    <div class="col-2 text-white">
                         <label asp-for="Sqft" class="control-label pt-2" style="font-size:20px;"></label>
                     </div>
                     <div class="col-10 pb-3">
@@ -62,7 +62,7 @@
                         <span asp-validation-for="Sqft" class="text-danger"></span>
                     </div>
 
-                    <div class="col-2">
+                    <div class="col-2 text-white">
                         <label asp-for="Amenity" class="control-label pt-2" style="font-size:20px;"></label>
                     </div>
                     <div class="col-10 pb-3">
@@ -70,11 +70,12 @@
                         <span asp-validation-for="Amenity" class="text-danger"></span>
                     </div>
                     <div class="col-5 offset-2">
-                        <a asp-action="IndexResort" asp-controller="Resort" class="btn-primary btn form-control ">Back to List</a>
-                    </div>
-                    <div class="col-5">
                         <input type="submit" value="Update" class="btn btn-success form-control" />
                     </div>
+                    <div class="col-5 ">
+                        <a asp-action="IndexResort" asp-controller="Resort" class="btn-primary btn form-control ">Back to List</a>
+                    </div>
+                    
                 </div>
             </div>
             <div class="col-2">

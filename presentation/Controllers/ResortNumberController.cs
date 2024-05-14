@@ -66,10 +66,8 @@ namespace presentation.Controllers
                 }
                 else
                 {
-                    if (response.ErrorMessages.Count > 0)
-                    {
-                        ModelState.AddModelError("ErrorMessages", response.ErrorMessages.FirstOrDefault());
-                    }
+                    TempData["error"] = (response.ErrorMessages != null && response.ErrorMessages.Count > 0) ?
+                        response.ErrorMessages[0] : "Error Encountered";
                 }
             }
 
@@ -107,6 +105,11 @@ namespace presentation.Controllers
                     });
                 return View(ResortNumberVM);
             }
+            else
+            {
+                TempData["error"] = (response.ErrorMessages != null && response.ErrorMessages.Count > 0) ?
+                    response.ErrorMessages[0] : "Error Encountered";
+            }
 
 
             return NotFound();
@@ -126,10 +129,8 @@ namespace presentation.Controllers
                 }
                 else
                 {
-                    if (response.ErrorMessages.Count > 0)
-                    {
-                        ModelState.AddModelError("ErrorMessages", response.ErrorMessages.FirstOrDefault());
-                    }
+                    TempData["error"] = (response.ErrorMessages != null && response.ErrorMessages.Count > 0) ?
+                        response.ErrorMessages[0] : "Error Encountered";
                 }
             }
 
@@ -181,6 +182,11 @@ namespace presentation.Controllers
             if (response != null && response.IsSuccess)
             {
                 return RedirectToAction(nameof(IndexResortNumber));
+            }
+            else
+            {
+                TempData["error"] = (response.ErrorMessages != null && response.ErrorMessages.Count > 0) ?
+                    response.ErrorMessages[0] : "Error Encountered";
             }
 
             return View(model);
